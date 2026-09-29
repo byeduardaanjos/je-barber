@@ -5,7 +5,7 @@ import Image from "next/image";
 import Link from "next/link";
 import {format} from "date-fns";
 import {ptBR} from "date-fns/locale";
-import {ArrowLeft,Ban,CalendarDays,CalendarRange,Check,CheckCircle2,ChevronLeft,ChevronRight,CircleDollarSign,Clock3,LayoutDashboard,MessageCircle,MoreHorizontal,Pencil,Plus,Scissors,Search,Trash2,UserRound,UsersRound,XCircle} from "lucide-react";
+import {ArrowLeft,Ban,CalendarDays,CalendarRange,Check,CheckCircle2,ChevronLeft,ChevronRight,CircleDollarSign,Clock3,LayoutDashboard,LockKeyhole,LogIn,LogOut,MessageCircle,MoreHorizontal,Pencil,Plus,Scissors,Search,Trash2,UserRound,UsersRound,XCircle} from "lucide-react";
 import {Button} from "@/components/ui/button";
 import {Dialog,DialogContent,DialogDescription,DialogHeader,DialogTitle} from "@/components/ui/dialog";
 import {DropdownMenu,DropdownMenuContent,DropdownMenuItem,DropdownMenuTrigger} from "@/components/ui/dropdown-menu";
@@ -24,6 +24,21 @@ const today=()=>format(new Date(),"yyyy-MM-dd");
 const pretty=(d:string)=>format(new Date(`${d}T12:00:00`),"dd 'de' MMMM",{locale:ptBR});
 
 export default function AdminPage(){
+ const[auth,setAuth]=useState<"checking"|"guest"|"authenticated">("checking");
+ useEffect(()=>{fetch("/api/admin/auth",{cache:"no-store"}).then(response=>response.json() as Promise<{authenticated:boolean}>).then(data=>setAuth(data.authenticated?"authenticated":"guest")).catch(()=>setAuth("guest"))},[]);
+ async function logout(){await fetch("/api/admin/auth",{method:"DELETE"});setAuth("guest")}
+ if(auth==="checking")return <main className="admin-login"><div className="admin-login-loading"><span/><p>Preparando painel</p></div></main>;
+ if(auth==="guest")return <AdminLogin onSuccess={()=>setAuth("authenticated")}/>;
+ return <AdminDashboard onLogout={logout}/>;
+}
+
+function AdminLogin({onSuccess}:{onSuccess:()=>void}){
+ const[username,setUsername]=useState(""),[password,setPassword]=useState(""),[loading,setLoading]=useState(false),[error,setError]=useState("");
+ async function submit(event:React.FormEvent){event.preventDefault();setLoading(true);setError("");try{const response=await fetch("/api/admin/auth",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({username,password})});const data=await response.json() as {error?:string};if(!response.ok)throw new Error(data.error||"Não foi possível entrar.");onSuccess()}catch(value){setError(value instanceof Error?value.message:"Não foi possível entrar.")}finally{setLoading(false)}}
+ return <main className="admin-login"><section className="admin-login-card"><div className="admin-login-brand"><Image src="/logoje-transparent.png" alt="J&E Barber" width={132} height={132}/><span>ACESSO RESTRITO</span></div><div className="admin-login-copy"><span className="admin-login-icon"><LockKeyhole/></span><p>PAINEL ADMINISTRATIVO</p><h1>Bem-vindo de volta.</h1><span>Entre com suas credenciais para gerenciar agenda, clientes e serviços.</span></div><form onSubmit={submit}><Label htmlFor="admin-user">Usuário</Label><Input id="admin-user" autoComplete="username" value={username} onChange={event=>setUsername(event.target.value)} placeholder="Digite seu usuário" required/><Label htmlFor="admin-password">Senha</Label><Input id="admin-password" type="password" autoComplete="current-password" value={password} onChange={event=>setPassword(event.target.value)} placeholder="Digite sua senha" required/>{error&&<p className="admin-login-error">{error}</p>}<Button disabled={loading}>{loading?"Verificando...":<><LogIn/> Entrar no painel</>}</Button></form><Link href="/"><ArrowLeft/> Voltar ao site</Link></section></main>
+}
+
+function AdminDashboard({onLogout}:{onLogout:()=>void}){
  const[bookings,setBookings]=useState<Booking[]>([]),[services,setServices]=useState<Service[]>(defaultServices),[blocks,setBlocks]=useState<Block[]>([]);
  const[selectedDate,setSelectedDate]=useState(today()),[editing,setEditing]=useState<Booking|null>(null),[blockOpen,setBlockOpen]=useState(false),[serviceOpen,setServiceOpen]=useState(false);
  const[viewMode,setViewMode]=useState<"day"|"week">("day"),[agendaStatus,setAgendaStatus]=useState("Todos"),[clientQuery,setClientQuery]=useState("");
@@ -45,7 +60,7 @@ export default function AdminPage(){
  async function deleteBlock(id:string){try{const response=await fetch("/api/barber",{method:"DELETE",headers:{"Content-Type":"application/json"},body:JSON.stringify({type:"block",id})});if(!response.ok)throw new Error();setBlocks(current=>current.filter(item=>item.id!==id));toast.success("Bloqueio removido.")}catch{toast.error("Não foi possível remover o bloqueio.")}}
  async function deleteService(number:string){try{const response=await fetch("/api/barber",{method:"DELETE",headers:{"Content-Type":"application/json"},body:JSON.stringify({type:"service",id:number})});if(!response.ok)throw new Error();setServices(current=>current.filter(item=>item.number!==number));toast.success("Serviço removido.")}catch{toast.error("Não foi possível remover o serviço.")}}
  return <main className="admin-shell"><Toaster theme="dark" richColors position="top-center"/>
-  <header className="admin-header"><div><Link href="/" className="brand"><Image src="/logoje-transparent.png" alt="J&E Barber" width={120} height={120}/></Link><span className="admin-divider"/><p>Painel de gestão</p></div><Link href="/" className="admin-public-link"><ArrowLeft/> Voltar ao site</Link></header>
+  <header className="admin-header"><div><Link href="/" className="brand"><Image src="/logoje-transparent.png" alt="J&E Barber" width={120} height={120}/></Link><span className="admin-divider"/><p>Painel de gestão</p></div><div className="admin-header-actions"><Link href="/" className="admin-public-link"><ArrowLeft/> Voltar ao site</Link><button className="admin-logout" onClick={onLogout}><LogOut/> Sair</button></div></header>
   <div className="admin-main"><div className="admin-title"><div><p className="admin-kicker">J&E BARBER</p><h1>Controle da barbearia</h1><p>Agenda, clientes e serviços em um único lugar.</p></div><Button onClick={()=>setBlockOpen(true)}><Ban/> Bloquear horário</Button></div>
    <section className="stats"><article className="stat"><CalendarDays/><span>Agenda de hoje</span><strong>{active.filter(b=>b.date===today()).length}</strong><small>atendimentos</small></article><article className="stat"><CheckCircle2/><span>Confirmados</span><strong>{upcoming.filter(b=>b.status==="Confirmado").length}</strong><small>próximas reservas</small></article><article className="stat"><UsersRound/><span>Clientes</span><strong>{clients.length}</strong><small>cadastrados</small></article><article className="stat"><CircleDollarSign/><span>Previsão de hoje</span><strong>R$ {todayRevenue}</strong><small>em serviços agendados</small></article></section>
    <Tabs defaultValue="agenda" className="admin-tabs"><TabsList variant="line" className="admin-tabs-list"><TabsTrigger value="agenda"><LayoutDashboard/> Agenda</TabsTrigger><TabsTrigger value="clientes"><UsersRound/> Clientes</TabsTrigger><TabsTrigger value="servicos"><Scissors/> Serviços</TabsTrigger><TabsTrigger value="bloqueios"><Ban/> Bloqueios</TabsTrigger></TabsList>
