@@ -468,7 +468,7 @@ body{background:radial-gradient(circle at 76% 0,rgba(202,148,49,.1),transparent 
 
 /* Gold interaction states — aligned with the BS identity */
 .nav-cta{display:inline-flex!important;align-items:center!important;justify-content:center!important;padding-top:0!important;padding-bottom:0!important;line-height:1!important}
-.time-slot.selected{border-color:#f0cf88;background:linear-gradient(125deg,#f7dfa7 0%,#bf8126 34%,#e8bd61 62%,#a96917 100%);color:#120b02;box-shadow:0 10px 28px rgba(201,139,38,.2),inset 0 1px 0 #fff0c4}
+.time-slot.selected,.time-slot.selected:hover:not(:disabled){border-color:#f0cf88!important;background:linear-gradient(125deg,#f7dfa7 0%,#bf8126 34%,#e8bd61 62%,#a96917 100%)!important;color:#120b02!important;box-shadow:0 10px 28px rgba(201,139,38,.2),inset 0 1px 0 #fff0c4!important;transform:translateY(-1px)}
 .time-slot.selected:before{background:linear-gradient(90deg,transparent,#fff2c9,transparent);opacity:.72}
 .time-slot.selected svg,.time-slot.selected small{color:#3a2508}
 .legend-dot.selected{border-color:#efcc82;background:linear-gradient(135deg,#f5dda4,#ac6e19);box-shadow:0 0 12px rgba(213,157,59,.3)}
