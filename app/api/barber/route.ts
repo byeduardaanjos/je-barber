@@ -1,9 +1,5 @@
 export const dynamic = "force-dynamic";
 
-import {isAdminRequest} from "@/lib/admin-auth";
-
-const unauthorized=()=>Response.json({error:"Acesso administrativo não autorizado."},{status:401});
-
 type BookingInput={id?:string;name:string;phone:string;service:string;date:string;time:string;status?:string};
 type ApiBody={action:string;booking?:BookingInput;block?:{date:string;time:string;note?:string};service?:{number:string;name:string;price:number;duration:number}};
 
@@ -30,7 +26,6 @@ async function callDatabase(action:string,payload:Record<string,unknown>={},admi
 export async function GET(request:Request){
   try{
     const isPublic=new URL(request.url).searchParams.get("scope")==="public";
-    if(!isPublic&&!isAdminRequest(request))return unauthorized();
     const data=await callDatabase(isPublic?"get_public":"get_admin",{},!isPublic);
     return Response.json(data,{headers:{"Cache-Control":"no-store"}});
   }catch(error){console.error("barber_data_load_failed",error);return Response.json({error:"Não foi possível carregar a agenda."},{status:500})}
@@ -44,7 +39,6 @@ export async function POST(request:Request){
       try{return Response.json(await callDatabase("create_booking",b as unknown as Record<string,unknown>))}
       catch(error){if(error instanceof Error&&error.message==="SLOT_TAKEN")return Response.json({error:"Este horário acabou de ser reservado."},{status:409});throw error}
     }
-    if(!isAdminRequest(request))return unauthorized();
     if(body.action==="createBlock"&&body.block)return Response.json(await callDatabase("create_block",body.block,true));
     if(body.action==="upsertService"&&body.service)return Response.json(await callDatabase("upsert_service",body.service,true));
     return Response.json({error:"Ação inválida."},{status:400});
@@ -53,7 +47,6 @@ export async function POST(request:Request){
 
 export async function PATCH(request:Request){
   try{
-    if(!isAdminRequest(request))return unauthorized();
     const {booking}=await request.json() as {booking:BookingInput};
     if(!booking?.id)return Response.json({error:"Agendamento inválido."},{status:400});
     try{return Response.json(await callDatabase("update_booking",booking as unknown as Record<string,unknown>,true))}
@@ -63,7 +56,6 @@ export async function PATCH(request:Request){
 
 export async function DELETE(request:Request){
   try{
-    if(!isAdminRequest(request))return unauthorized();
     const {type,id}=await request.json() as {type:"block"|"service";id:string};
     if(type==="block")return Response.json(await callDatabase("delete_block",{id},true));
     if(type==="service")return Response.json(await callDatabase("delete_service",{id},true));

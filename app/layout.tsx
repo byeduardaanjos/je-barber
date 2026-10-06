@@ -2,9 +2,9 @@ import type { Metadata } from "next";
 import "./globals.css";
 
 export const metadata: Metadata = {
-  title: "J&E Barber | Barbearia em Palhoça",
-  description: "Agende seu horário na J&E Barber. Técnica, estilo e presença em Palhoça, SC.",
-  icons: { icon: "/favicon.svg" },
+  title: "BS Barber Classic | Barbearia moderna para o cavalheiro atual",
+  description: "Agende seu horário na BS Barber Classic. Cortes, barba, visagismo e cuidados masculinos desde 2016.",
+  icons: { icon: "/logo-bs.png" },
 };
 
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
