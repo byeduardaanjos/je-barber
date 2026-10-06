@@ -33,7 +33,7 @@ body{background:#080807;color:#f0ede7;font-family:Inter,Arial,Helvetica,sans-ser
 .nav-cta{height:44px!important;padding-inline:24px!important;background:transparent!important;color:#eeeae3!important;border-color:rgba(238,234,227,.38)!important;box-shadow:none!important}
 .nav-cta:hover{background:#eeeae3!important;color:#0a0a09!important;border-color:#eeeae3!important}
 
-.hero{max-width:none;min-height:calc(100svh - 82px);padding:110px max(28px,calc((100vw - 1480px)/2));align-items:center;border:0;background-image:linear-gradient(90deg,rgba(5,5,5,.96) 0%,rgba(5,5,5,.83) 31%,rgba(5,5,5,.3) 59%,rgba(5,5,5,.08) 100%),linear-gradient(0deg,rgba(5,5,5,.7) 0%,transparent 31%),url('/hero-barbershop.png');background-repeat:no-repeat;background-size:cover;background-position:center center}
+.hero{max-width:none;min-height:calc(100svh - 82px);padding:110px max(28px,calc((100vw - 1480px)/2));align-items:center;border:0;background-image:linear-gradient(90deg,rgba(5,5,5,.96) 0%,rgba(5,5,5,.83) 31%,rgba(5,5,5,.3) 59%,rgba(5,5,5,.08) 100%),linear-gradient(0deg,rgba(5,5,5,.7) 0%,transparent 31%),url('/ambiente-bs.png');background-repeat:no-repeat;background-size:cover;background-position:center center}
 .hero:after{background:linear-gradient(90deg,rgba(201,191,175,.09),transparent 1px);background-size:25% 100%;opacity:.22}
 .hero-copy{max-width:760px;padding-bottom:42px}.eyebrow{font-size:10px;font-weight:600;letter-spacing:4.8px;color:#c3bcb2;margin-bottom:28px}
 .hero h1,.section-heading h2,.booking h2,.contact h2{font-family:"Iowan Old Style","Baskerville",Georgia,"Times New Roman",serif}
@@ -57,7 +57,7 @@ body{background:#080807;color:#f0ede7;font-family:Inter,Arial,Helvetica,sans-ser
 
 .admin-header .brand{width:104px}.admin-header .brand img{width:66px;height:66px}.admin-shell .panel,.admin-shell .stat{border-radius:12px}
 
-@media(max-width:850px){.site-header{height:74px;padding-inline:22px;background:linear-gradient(180deg,rgba(17,17,16,.68),rgba(8,8,7,.5));-webkit-backdrop-filter:blur(22px) saturate(140%);backdrop-filter:blur(22px) saturate(140%)}.brand{width:96px;height:70px}.brand img{width:64px;height:64px}.nav{top:74px;background:rgba(10,10,9,.78);-webkit-backdrop-filter:blur(24px) saturate(145%);backdrop-filter:blur(24px) saturate(145%);box-shadow:0 18px 36px rgba(0,0,0,.28)}.hero{min-height:760px;padding:92px 24px 110px;background-image:linear-gradient(90deg,rgba(5,5,5,.94),rgba(5,5,5,.58)),linear-gradient(0deg,rgba(5,5,5,.8),transparent 45%),url('/hero-barbershop.png');background-position:61% center}.hero-copy{padding-bottom:70px}.hero h1{font-size:clamp(50px,12vw,72px);letter-spacing:-3px}.hero-signature{left:24px;right:24px;bottom:26px}.pillars{padding-inline:24px}.pillars article,.pillars article:first-child,.pillars article:last-child{padding:30px 0}.pillars article{gap:20px}.section-shell,.booking,.contact{padding-inline:24px}.section-heading h2,.booking h2,.contact h2{font-size:clamp(46px,11vw,64px)}}
+@media(max-width:850px){.site-header{height:74px;padding-inline:22px;background:linear-gradient(180deg,rgba(17,17,16,.68),rgba(8,8,7,.5));-webkit-backdrop-filter:blur(22px) saturate(140%);backdrop-filter:blur(22px) saturate(140%)}.brand{width:96px;height:70px}.brand img{width:64px;height:64px}.nav{top:74px;background:rgba(10,10,9,.78);-webkit-backdrop-filter:blur(24px) saturate(145%);backdrop-filter:blur(24px) saturate(145%);box-shadow:0 18px 36px rgba(0,0,0,.28)}.hero{min-height:760px;padding:92px 24px 110px;background-image:linear-gradient(90deg,rgba(5,5,5,.94),rgba(5,5,5,.58)),linear-gradient(0deg,rgba(5,5,5,.8),transparent 45%),url('/ambiente-bs.png');background-position:61% center}.hero-copy{padding-bottom:70px}.hero h1{font-size:clamp(50px,12vw,72px);letter-spacing:-3px}.hero-signature{left:24px;right:24px;bottom:26px}.pillars{padding-inline:24px}.pillars article,.pillars article:first-child,.pillars article:last-child{padding:30px 0}.pillars article{gap:20px}.section-shell,.booking,.contact{padding-inline:24px}.section-heading h2,.booking h2,.contact h2{font-size:clamp(46px,11vw,64px)}}
 @media(max-width:520px){.site-header{height:70px}.brand{height:66px}.brand img{width:58px;height:58px}.nav{top:70px}.hero{min-height:720px;padding-top:88px;background-position:64% center}.hero-copy{padding-bottom:90px}.hero h1{font-size:49px;line-height:.97;letter-spacing:-2.7px}.hero-text{font-size:16px}.hero-signature span:last-child{display:none}.hero-actions{align-items:flex-start}.hero-actions>a:first-child{width:100%}.text-link{align-self:center}.pillars{grid-template-columns:1fr}.pillars article{min-height:0;border-right:0;border-bottom:1px solid rgba(255,255,255,.09)}.pillars article:last-child{border-bottom:0}.section-shell{padding-block:86px}.section-heading{gap:28px}.section-heading h2,.booking h2,.contact h2{font-size:48px}.service-list article:hover{padding-inline:0}.booking-form{border-radius:13px;padding:20px}}
 
 /* Real space and premium service cards */
@@ -444,3 +444,24 @@ body{background:radial-gradient(circle at 76% 0,rgba(202,148,49,.1),transparent 
  .about-photo{min-height:430px}
 }
 @media(prefers-reduced-motion:reduce){.hero-media{animation:none;transform:none}}
+
+/* Real work and business information */
+.work-showcase{padding-top:108px;padding-bottom:118px;background:linear-gradient(180deg,#080603,#0b0804)}
+.work-heading{display:grid;grid-template-columns:1.25fr .6fr;align-items:end;gap:72px;margin-bottom:54px}
+.work-heading h2{font:400 clamp(48px,5.7vw,78px)/.96 "Iowan Old Style","Baskerville",Georgia,serif;letter-spacing:-3px;color:#f8f0df}
+.work-heading h2 em{font-weight:400;color:transparent;background:linear-gradient(108deg,#fff1c5,#b77a20 35%,#f2d487 68%,#c28a31);-webkit-background-clip:text;background-clip:text}
+.work-heading>p{max-width:390px;color:#a99d84;font-size:15px;line-height:1.75}
+.work-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:18px}
+.work-grid figure{position:relative;margin:0;overflow:hidden;border:1px solid rgba(221,176,83,.25);border-radius:16px;background:#0d0a05;box-shadow:0 24px 60px rgba(0,0,0,.32)}
+.work-grid figure:after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,transparent 64%,rgba(5,3,1,.72));pointer-events:none}
+.work-grid img{display:block;width:100%;height:auto;aspect-ratio:1.77;object-fit:cover;filter:saturate(.82) contrast(1.04) brightness(.88);transition:transform .8s cubic-bezier(.22,1,.36,1),filter .5s ease}
+.work-grid figure:hover img{transform:scale(1.035);filter:saturate(.95) contrast(1.05) brightness(.96)}
+.work-grid figcaption{position:absolute;z-index:2;left:22px;right:22px;bottom:18px;display:flex;align-items:center;gap:12px;color:#f5ecd9;font-size:11px;letter-spacing:1.7px;text-transform:uppercase}
+.work-grid figcaption span{color:#d6a74a}
+.opening-hours{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));margin-top:20px;border:1px solid rgba(216,169,74,.2);background:rgba(194,135,32,.035)}
+.opening-hours>div{min-height:92px;padding:22px 24px;display:flex;flex-direction:column;justify-content:center;gap:10px;border-right:1px solid rgba(216,169,74,.16)}
+.opening-hours>div:last-child{border-right:0}
+.opening-hours small{color:#9f7837;font-size:9px;font-weight:700;letter-spacing:1.8px}
+.opening-hours strong{color:#f1e6ce;font:400 17px/1.2 "Iowan Old Style","Baskerville",Georgia,serif}
+@media(max-width:850px){.work-heading{grid-template-columns:1fr;gap:24px}.work-grid{grid-template-columns:1fr}.opening-hours{grid-template-columns:repeat(2,minmax(0,1fr))}.opening-hours>div:nth-child(2){border-right:0}.opening-hours>div:nth-child(-n+2){border-bottom:1px solid rgba(216,169,74,.16)}}
+@media(max-width:520px){.work-showcase{padding-top:78px;padding-bottom:82px}.work-heading{margin-bottom:36px}.work-heading h2{font-size:44px}.work-grid{gap:13px}.work-grid figure{border-radius:12px}.work-grid figcaption{left:16px;bottom:14px}.opening-hours>div{min-height:82px;padding:18px 16px}.opening-hours strong{font-size:15px}}
