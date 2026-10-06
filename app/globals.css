@@ -219,7 +219,7 @@ body{background:radial-gradient(circle at 50% 0,rgba(126,145,166,.1),transparent
 .site-header{background:linear-gradient(180deg,rgba(21,24,27,.82),rgba(7,8,9,.68));border-bottom:1px solid rgba(198,211,225,.35);box-shadow:0 15px 45px rgba(0,0,0,.38),inset 0 1px 0 rgba(255,255,255,.18)}
 .brand img{filter:brightness(1.28) contrast(1.12) drop-shadow(0 0 14px rgba(212,225,239,.16))}
 .nav>a:not(.nav-cta){color:#d2dae2}.eyebrow,.pillars small,.contact-links span small{color:#b8c6d5}
-.hero{background-image:linear-gradient(90deg,rgba(4,5,6,.91) 0%,rgba(5,6,7,.72) 34%,rgba(5,6,7,.22) 62%,rgba(5,6,7,.04) 100%),linear-gradient(0deg,rgba(4,5,6,.64) 0%,transparent 34%),url('/hero-barbershop.png')}
+.hero{background-image:linear-gradient(90deg,rgba(4,5,6,.91) 0%,rgba(5,6,7,.72) 34%,rgba(5,6,7,.22) 62%,rgba(5,6,7,.04) 100%),linear-gradient(0deg,rgba(4,5,6,.64) 0%,transparent 34%),url('/ambiente-bs.png')}
 .hero h1 em,.section-heading h2 em,.about-copy h2 em,.booking h2 em,.contact h2 em,.catalog-intro h1 em{background:linear-gradient(105deg,#ffffff 0%,#8e9dad 23%,#eef5fb 48%,#aab7c5 70%,#ffffff 100%);-webkit-background-clip:text;background-clip:text;color:transparent;text-shadow:0 0 34px rgba(179,199,219,.15)}
 .hero-text,.about-copy>p:not(.eyebrow),.booking-intro>p:not(.eyebrow),.catalog-subtitle{color:#cad2da}
 .hero-actions>a:first-child,.submit,.success-close,.catalog-bottom a{background:linear-gradient(120deg,#ffffff 0%,#aeb9c5 28%,#edf3f8 52%,#8996a5 76%,#f7fafc 100%)!important;border:1px solid #eef5fb!important;box-shadow:0 10px 40px rgba(167,190,213,.25),inset 0 1px 0 #fff,inset 0 -1px 0 rgba(61,76,92,.45)!important}
@@ -243,7 +243,7 @@ body{background:radial-gradient(circle at 50% 0,rgba(175,175,175,.075),transpare
 .site-header{background:linear-gradient(180deg,rgba(22,22,21,.84),rgba(8,8,8,.7));border-bottom-color:rgba(215,215,213,.27);box-shadow:0 15px 45px rgba(0,0,0,.38),inset 0 1px 0 rgba(255,255,255,.13)}
 .brand img{filter:grayscale(1) brightness(1.22) contrast(1.1) drop-shadow(0 0 12px rgba(255,255,255,.1))}
 .nav>a:not(.nav-cta){color:#cececc}.eyebrow,.pillars small,.contact-links span small{color:#c8c8c6}
-.hero{background-image:linear-gradient(90deg,rgba(5,5,5,.93) 0%,rgba(5,5,5,.75) 34%,rgba(5,5,5,.22) 62%,rgba(5,5,5,.04) 100%),linear-gradient(0deg,rgba(5,5,5,.66) 0%,transparent 34%),url('/hero-barbershop.png')}
+.hero{background-image:linear-gradient(90deg,rgba(5,5,5,.93) 0%,rgba(5,5,5,.75) 34%,rgba(5,5,5,.22) 62%,rgba(5,5,5,.04) 100%),linear-gradient(0deg,rgba(5,5,5,.66) 0%,transparent 34%),url('/ambiente-bs.png')}
 .hero h1 em,.section-heading h2 em,.about-copy h2 em,.booking h2 em,.contact h2 em,.catalog-intro h1 em{background:linear-gradient(108deg,#ffffff 0%,#aaa 24%,#f3f3f3 48%,#929292 72%,#fff 100%);-webkit-background-clip:text;background-clip:text;color:transparent;text-shadow:0 0 28px rgba(255,255,255,.08)}
 .hero-text,.about-copy>p:not(.eyebrow),.booking-intro>p:not(.eyebrow),.catalog-subtitle{color:#c4c4c1}
 .hero-actions>a:first-child,.submit,.success-close,.catalog-bottom a{background:linear-gradient(120deg,#fff 0%,#b7b7b7 28%,#eee 52%,#8f8f8f 76%,#fafafa 100%)!important;border-color:#e8e8e6!important;box-shadow:0 10px 36px rgba(255,255,255,.12),inset 0 1px 0 #fff,inset 0 -1px 0 rgba(40,40,40,.42)!important}
@@ -314,7 +314,7 @@ body{background:radial-gradient(circle at 50% 0,rgba(175,175,175,.075),transpare
 .site-header.is-scrolled{background:rgba(10,10,10,.76);border-bottom-color:rgba(235,235,232,.22);box-shadow:0 18px 52px rgba(0,0,0,.42),inset 0 1px 0 rgba(255,255,255,.1);-webkit-backdrop-filter:blur(28px) saturate(125%);backdrop-filter:blur(28px) saturate(125%)}
 .hero{--light-x:72%;--light-y:38%;--copy-x:0px;--copy-y:0px;isolation:isolate}
 .hero{background-image:none!important;background-color:#070707}
-.hero-media{position:absolute;z-index:0;inset:-4%;background-image:linear-gradient(90deg,rgba(5,5,5,.93) 0%,rgba(5,5,5,.75) 34%,rgba(5,5,5,.2) 62%,rgba(5,5,5,.03) 100%),linear-gradient(0deg,rgba(5,5,5,.68) 0%,transparent 38%),url('/hero-barbershop.png');background-size:cover;background-position:center;will-change:transform;animation:jeHeroCamera 13s ease-in-out infinite alternate}
+.hero-media{position:absolute;z-index:0;inset:-4%;background-image:linear-gradient(90deg,rgba(5,5,5,.93) 0%,rgba(5,5,5,.75) 34%,rgba(5,5,5,.2) 62%,rgba(5,5,5,.03) 100%),linear-gradient(0deg,rgba(5,5,5,.68) 0%,transparent 38%),url('/ambiente-bs.png');background-size:cover;background-position:center;will-change:transform;animation:jeHeroCamera 13s ease-in-out infinite alternate}
 .hero:after{z-index:1;background:radial-gradient(circle 360px at var(--light-x) var(--light-y),rgba(255,255,255,.105),transparent 70%),linear-gradient(90deg,rgba(5,5,5,.18),transparent 60%);transition:background .18s linear}
 .hero:before{content:"";position:absolute;z-index:1;inset:-8%;pointer-events:none;background:linear-gradient(112deg,transparent 38%,rgba(255,255,255,.035) 48%,transparent 58%);transform:translateX(-45%);animation:jeAmbientSweep 8s cubic-bezier(.4,0,.2,1) infinite}
 .hero-copy{transition:transform .6s cubic-bezier(.22,1,.36,1);transform:translate3d(var(--copy-x),var(--copy-y),0)}
@@ -398,4 +398,49 @@ body{background:radial-gradient(circle at 76% 0,rgba(202,148,49,.1),transparent 
 .admin-shell{background:#080603}.admin-kicker,.admin-shell .eyebrow{color:#d9ad57}.admin-shell .stats .stat,.admin-shell .panel{border-color:rgba(218,170,74,.18);background:linear-gradient(145deg,rgba(190,132,31,.07),rgba(255,238,197,.01))}.admin-shell .admin-title button,.admin-modal form>button{background:linear-gradient(120deg,#f0d48f,#af7018)!important;color:#100a02!important;border-color:#e6c170!important}.admin-tabs-list button[data-state=active]{color:#efd18b!important}.admin-tabs-list button:after{background:#d49b3e!important}.status-pendente{border-color:rgba(215,166,65,.35);background:rgba(191,131,30,.1);color:#e2bd70}
 @keyframes jeSilverFlow{0%,100%{background-position:0% 50%}50%{background-position:100% 50%}}
 @keyframes jePhotoReveal{from{transform:scale(1.11);filter:brightness(.32) saturate(.7) contrast(1.14)}to{transform:scale(1.01);filter:brightness(.48) saturate(.82) contrast(1.12)}}
-@media(max-width:850px){.brand{width:82px;height:68px}.brand img{width:64px;height:64px}.hero-media{background-size:auto,auto,82vw auto,cover;background-position:center,center,67% 47%,center 78%}}
+@media(max-width:850px){.brand{width:82px;height:68px}.brand img{width:64px;height:64px}}
+
+/* BS real-space hero — quiet luxury, editorial and authentic */
+.hero{min-height:calc(100svh - 80px);background:#060503!important;border-inline-color:rgba(216,169,74,.16)}
+.hero-media{
+ inset:0;
+ background-image:
+  linear-gradient(90deg,#060503 0%,rgba(6,5,3,.98) 25%,rgba(6,5,3,.87) 44%,rgba(6,5,3,.28) 72%,rgba(6,5,3,.08) 100%),
+  linear-gradient(0deg,rgba(5,4,2,.72) 0%,transparent 38%),
+  url('/ambiente-bs.png');
+ background-repeat:no-repeat;
+ background-size:100% 100%,100% 100%,min(49vw,720px) auto;
+ background-position:center,center,right 42%;
+ filter:saturate(.72) contrast(1.1) brightness(.76);
+ animation:bsHeroCamera 15s cubic-bezier(.45,0,.2,1) infinite alternate;
+}
+.hero-copy{max-width:760px}
+.hero h1{font-size:clamp(56px,6.65vw,100px);line-height:.93;letter-spacing:-4.5px;text-wrap:balance}
+.hero-text{max-width:535px;color:#c8bda7;font-size:17px}
+.hero:after{background:radial-gradient(circle 390px at var(--light-x) var(--light-y),rgba(229,181,87,.1),transparent 72%),linear-gradient(90deg,rgba(5,4,2,.14),transparent 66%)}
+.hero:before{opacity:.58}
+.hero-signature{background:linear-gradient(90deg,rgba(7,5,2,.82),rgba(7,5,2,.18));backdrop-filter:blur(4px)}
+.about-photo{min-height:540px;overflow:hidden;background:#0b0804}
+.about-photo img{object-position:center 50%;filter:brightness(.7) saturate(.78) contrast(1.08)}
+.about-photo:after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,transparent 56%,rgba(5,4,2,.52)),linear-gradient(90deg,rgba(210,155,54,.06),transparent 46%);pointer-events:none}
+@keyframes bsHeroCamera{0%{transform:scale(1.015) translate3d(0,0,0)}100%{transform:scale(1.065) translate3d(-.7%,.35%,0)}}
+@media(max-width:1050px){
+ .hero-media{background-size:100% 100%,100% 100%,min(58vw,660px) auto;background-position:center,center,right center}
+ .hero h1{font-size:clamp(54px,8.2vw,84px)}
+}
+@media(max-width:760px){
+ .hero{min-height:calc(100svh - 70px);padding-top:118px;padding-bottom:92px;align-items:flex-end}
+ .hero-media{background-image:linear-gradient(0deg,#060503 0%,rgba(6,5,3,.92) 30%,rgba(6,5,3,.28) 68%,rgba(6,5,3,.12) 100%),url('/ambiente-bs.png');background-size:100% 100%,cover;background-position:center,center 43%;filter:saturate(.72) contrast(1.08) brightness(.66)}
+ .hero-copy{max-width:100%}
+ .hero h1{font-size:clamp(48px,13vw,68px);letter-spacing:-3px}
+ .hero-text{font-size:16px;line-height:1.65;max-width:92%}
+ .hero-signature{background:rgba(7,5,2,.58)}
+}
+@media(max-width:480px){
+ .hero{padding-inline:22px}
+ .hero h1{font-size:clamp(43px,12.2vw,58px)}
+ .hero-actions{gap:22px}
+ .hero-actions button{padding-inline:21px}
+ .about-photo{min-height:430px}
+}
+@media(prefers-reduced-motion:reduce){.hero-media{animation:none;transform:none}}
