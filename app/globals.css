@@ -465,3 +465,12 @@ body{background:radial-gradient(circle at 76% 0,rgba(202,148,49,.1),transparent 
 .opening-hours strong{color:#f1e6ce;font:400 17px/1.2 "Iowan Old Style","Baskerville",Georgia,serif}
 @media(max-width:850px){.work-heading{grid-template-columns:1fr;gap:24px}.work-grid{grid-template-columns:1fr}.opening-hours{grid-template-columns:repeat(2,minmax(0,1fr))}.opening-hours>div:nth-child(2){border-right:0}.opening-hours>div:nth-child(-n+2){border-bottom:1px solid rgba(216,169,74,.16)}}
 @media(max-width:520px){.work-showcase{padding-top:78px;padding-bottom:82px}.work-heading{margin-bottom:36px}.work-heading h2{font-size:44px}.work-grid{gap:13px}.work-grid figure{border-radius:12px}.work-grid figcaption{left:16px;bottom:14px}.opening-hours>div{min-height:82px;padding:18px 16px}.opening-hours strong{font-size:15px}}
+
+/* Gold interaction states — aligned with the BS identity */
+.nav-cta{display:inline-flex!important;align-items:center!important;justify-content:center!important;padding-top:0!important;padding-bottom:0!important;line-height:1!important}
+.time-slot.selected{border-color:#f0cf88;background:linear-gradient(125deg,#f7dfa7 0%,#bf8126 34%,#e8bd61 62%,#a96917 100%);color:#120b02;box-shadow:0 10px 28px rgba(201,139,38,.2),inset 0 1px 0 #fff0c4}
+.time-slot.selected:before{background:linear-gradient(90deg,transparent,#fff2c9,transparent);opacity:.72}
+.time-slot.selected svg,.time-slot.selected small{color:#3a2508}
+.legend-dot.selected{border-color:#efcc82;background:linear-gradient(135deg,#f5dda4,#ac6e19);box-shadow:0 0 12px rgba(213,157,59,.3)}
+.calendar-popover [data-selected-single=true]{background:linear-gradient(135deg,#f5dda4,#b5751e)!important;color:#110a02!important;box-shadow:0 7px 20px rgba(199,137,38,.22)}
+.calendar-popover [data-selected-single=true]:hover{background:linear-gradient(135deg,#ffe9b7,#c7892d)!important;color:#100902!important}
