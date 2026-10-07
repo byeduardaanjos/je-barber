@@ -71,7 +71,8 @@ export async function POST(request:Request){
     if(body.action==="cancelCustomerBooking"&&body.phone&&body.customerToken&&body.bookingId){
       if(!await validCustomer(body.phone,body.customerToken))return Response.json({error:"Acesso não reconhecido neste aparelho."},{status:403});
       const data=await callDatabase("get_admin",{},true) as {bookings?:BookingInput[]};
-      const booking=(data.bookings||[]).find(item=>item.id===body.bookingId&&normalizePhone(item.phone)===normalizePhone(body.phone));
+      const requestedPhone=normalizePhone(body.phone);const requestedBookingId=body.bookingId;
+      const booking=(data.bookings||[]).find(item=>item.id===requestedBookingId&&normalizePhone(item.phone)===requestedPhone);
       if(!booking)return Response.json({error:"Agendamento não encontrado."},{status:404});
       if(booking.status==="Cancelado")return Response.json({booking,notificationSent:false});
       if(!canCancel(booking.date,booking.time))return Response.json({error:"O cancelamento online encerra 4 horas antes do horário. Fale com a barbearia pelo WhatsApp."},{status:422});
