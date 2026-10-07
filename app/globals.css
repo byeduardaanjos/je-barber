@@ -407,7 +407,7 @@ body{background:radial-gradient(circle at 76% 0,rgba(202,148,49,.1),transparent 
  background-image:
   linear-gradient(90deg,rgba(6,5,3,.96) 0%,rgba(6,5,3,.8) 35%,rgba(6,5,3,.42) 67%,rgba(6,5,3,.18) 100%),
   linear-gradient(0deg,rgba(5,4,2,.72) 0%,transparent 43%),
-  url('/ambiente-bs.png');
+  url('/ambiente-bs.webp');
  background-repeat:no-repeat;
  background-size:100% 100%,100% 100%,cover;
  background-position:center,center,center 58%;
@@ -430,7 +430,7 @@ body{background:radial-gradient(circle at 76% 0,rgba(202,148,49,.1),transparent 
 }
 @media(max-width:760px){
  .hero{min-height:calc(100svh - 70px);padding-top:118px;padding-bottom:92px;align-items:flex-end}
- .hero-media{background-image:linear-gradient(0deg,#060503 0%,rgba(6,5,3,.92) 30%,rgba(6,5,3,.28) 68%,rgba(6,5,3,.12) 100%),url('/ambiente-bs.png');background-size:100% 100%,cover;background-position:center,center 43%;filter:saturate(.72) contrast(1.08) brightness(.66)}
+ .hero-media{background-image:linear-gradient(0deg,#060503 0%,rgba(6,5,3,.92) 30%,rgba(6,5,3,.28) 68%,rgba(6,5,3,.12) 100%),url('/ambiente-bs.webp');background-size:100% 100%,cover;background-position:center,center 43%;filter:saturate(.72) contrast(1.08) brightness(.66)}
  .hero-copy{max-width:100%}
  .hero h1{font-size:clamp(48px,13vw,68px);letter-spacing:-3px}
  .hero-text{font-size:16px;line-height:1.65;max-width:92%}
