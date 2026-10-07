@@ -474,3 +474,53 @@ body{background:radial-gradient(circle at 76% 0,rgba(202,148,49,.1),transparent 
 .legend-dot.selected{border-color:#efcc82;background:linear-gradient(135deg,#f5dda4,#ac6e19);box-shadow:0 0 12px rgba(213,157,59,.3)}
 .calendar-popover [data-selected-single=true]{background:linear-gradient(135deg,#f5dda4,#b5751e)!important;color:#110a02!important;box-shadow:0 7px 20px rgba(199,137,38,.22)}
 .calendar-popover [data-selected-single=true]:hover{background:linear-gradient(135deg,#ffe9b7,#c7892d)!important;color:#100902!important}
+
+/* Booking fields and time states — keep every interaction in the BS black/gold palette */
+.booking-form input,
+.booking-form input:hover,
+.booking-form input:focus,
+.booking-form input:focus-visible,
+.booking-form input:active{
+ background:#171108!important;
+ border-color:rgba(218,170,74,.38)!important;
+ color:#f8f1e2!important;
+ caret-color:#e4b95d!important;
+ outline:none!important;
+ box-shadow:inset 0 1px 0 rgba(255,232,181,.035),0 0 0 1px transparent!important;
+}
+.booking-form input:focus,
+.booking-form input:focus-visible{
+ border-color:rgba(236,195,108,.72)!important;
+ box-shadow:0 0 0 3px rgba(202,143,42,.1),inset 0 1px 0 rgba(255,232,181,.055)!important;
+}
+.booking-form input::placeholder{-webkit-text-fill-color:#8f826b;color:#8f826b;opacity:1}
+.booking-form input:-webkit-autofill,
+.booking-form input:-webkit-autofill:hover,
+.booking-form input:-webkit-autofill:focus,
+.booking-form input:-webkit-autofill:active{
+ -webkit-text-fill-color:#f8f1e2!important;
+ caret-color:#e4b95d!important;
+ -webkit-box-shadow:0 0 0 1000px #171108 inset!important;
+ box-shadow:0 0 0 1000px #171108 inset!important;
+ border-color:rgba(218,170,74,.46)!important;
+ transition:background-color 9999s ease-out 0s;
+}
+.time-slot:hover:not(:disabled):not(.selected),
+.time-slot:focus-visible:not(:disabled):not(.selected){
+ transform:translateY(-1px);
+ border-color:rgba(231,188,97,.68)!important;
+ background:linear-gradient(145deg,rgba(192,128,27,.16),rgba(89,55,10,.09))!important;
+ color:#f7ecd4!important;
+ box-shadow:0 9px 22px rgba(161,101,19,.12),inset 0 1px 0 rgba(255,226,166,.14)!important;
+ outline:none!important;
+}
+.time-slot:hover:not(:disabled):not(.selected) svg,
+.time-slot:hover:not(:disabled):not(.selected) small,
+.time-slot:focus-visible:not(:disabled):not(.selected) svg,
+.time-slot:focus-visible:not(:disabled):not(.selected) small{color:#dfb75f!important}
+.calendar-popover button:hover:not([data-selected-single=true]),
+.calendar-popover button:focus-visible:not([data-selected-single=true]){
+ background:rgba(190,128,28,.16)!important;
+ color:#f1d698!important;
+ outline:1px solid rgba(225,181,89,.34)!important;
+}
