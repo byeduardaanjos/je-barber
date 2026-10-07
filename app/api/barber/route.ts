@@ -1,7 +1,27 @@
 export const dynamic = "force-dynamic";
 
+import {createHmac,timingSafeEqual} from "node:crypto";
+
 type BookingInput={id?:string;name:string;phone:string;service:string;date:string;time:string;status?:string};
-type ApiBody={action:string;booking?:BookingInput;block?:{date:string;time:string;note?:string};service?:{number:string;name:string;price:number;duration:number}};
+type ApiBody={action:string;booking?:BookingInput;block?:{date:string;time:string;note?:string};service?:{number:string;name:string;price:number;duration:number};phone?:string;customerToken?:string;bookingId?:string};
+
+const normalizePhone=(value:string)=>value.replace(/\D/g,"");
+function customerToken(phone:string){
+ const secret=process.env.BARBER_API_SECRET;if(!secret)throw new Error("Configuração de segurança indisponível.");
+ return createHmac("sha256",secret).update(`customer:${normalizePhone(phone)}`).digest("hex");
+}
+function validCustomer(phone:string,token:string){
+ if(!phone||!token)return false;const expected=customerToken(phone);const a=Buffer.from(expected);const b=Buffer.from(token);return a.length===b.length&&timingSafeEqual(a,b);
+}
+function canCancel(date:string,time:string){return new Date(`${date}T${time}:00-03:00`).getTime()-Date.now()>=4*60*60*1000}
+async function notifyCancellation(booking:BookingInput){
+ const accessToken=process.env.WHATSAPP_ACCESS_TOKEN,phoneNumberId=process.env.WHATSAPP_PHONE_NUMBER_ID,template=process.env.WHATSAPP_CANCEL_TEMPLATE;
+ if(!accessToken||!phoneNumberId||!template)return false;
+ const to=normalizePhone(booking.phone).replace(/^0+/,"");
+ const recipient=to.startsWith("55")?to:`55${to}`;
+ const response=await fetch(`https://graph.facebook.com/v22.0/${phoneNumberId}/messages`,{method:"POST",headers:{Authorization:`Bearer ${accessToken}`,"Content-Type":"application/json"},body:JSON.stringify({messaging_product:"whatsapp",to:recipient,type:"template",template:{name:template,language:{code:"pt_BR"},components:[{type:"body",parameters:[{type:"text",text:booking.name},{type:"text",text:booking.service},{type:"text",text:booking.date},{type:"text",text:booking.time}]}]}})});
+ return response.ok;
+}
 
 async function callDatabase(action:string,payload:Record<string,unknown>={},admin=false){
   const url=process.env.SUPABASE_URL;
@@ -36,8 +56,30 @@ export async function POST(request:Request){
     const body=await request.json() as ApiBody;
     if(body.action==="createBooking"&&body.booking){
       const b=body.booking;if(!b.name||!b.phone||!b.service||!b.date||!b.time)return Response.json({error:"Preencha todos os dados."},{status:400});
-      try{return Response.json(await callDatabase("create_booking",b as unknown as Record<string,unknown>))}
+      try{const data=await callDatabase("create_booking",b as unknown as Record<string,unknown>);return Response.json({...data,customerToken:customerToken(b.phone)})}
       catch(error){if(error instanceof Error&&error.message==="SLOT_TAKEN")return Response.json({error:"Este horário acabou de ser reservado."},{status:409});throw error}
+    }
+    if(body.action==="createAdminBooking"&&body.booking){
+      const b=body.booking;if(!b.name||!b.phone||!b.service||!b.date||!b.time)return Response.json({error:"Preencha todos os dados."},{status:400});
+      try{return Response.json(await callDatabase("create_booking",b as unknown as Record<string,unknown>,true))}
+      catch(error){if(error instanceof Error&&error.message==="SLOT_TAKEN")return Response.json({error:"Este horário já está ocupado."},{status:409});throw error}
+    }
+    if(body.action==="getCustomerBookings"&&body.phone&&body.customerToken){
+      if(!validCustomer(body.phone,body.customerToken))return Response.json({error:"Acesso não reconhecido neste aparelho."},{status:403});
+      const data=await callDatabase("get_admin",{},true) as {bookings?:BookingInput[]};
+      const phone=normalizePhone(body.phone);const bookings=(data.bookings||[]).filter(item=>normalizePhone(item.phone)===phone).sort((a,b)=>`${b.date}${b.time}`.localeCompare(`${a.date}${a.time}`));
+      return Response.json({bookings});
+    }
+    if(body.action==="cancelCustomerBooking"&&body.phone&&body.customerToken&&body.bookingId){
+      if(!validCustomer(body.phone,body.customerToken))return Response.json({error:"Acesso não reconhecido neste aparelho."},{status:403});
+      const data=await callDatabase("get_admin",{},true) as {bookings?:BookingInput[]};
+      const booking=(data.bookings||[]).find(item=>item.id===body.bookingId&&normalizePhone(item.phone)===normalizePhone(body.phone));
+      if(!booking)return Response.json({error:"Agendamento não encontrado."},{status:404});
+      if(booking.status==="Cancelado")return Response.json({booking,notificationSent:false});
+      if(!canCancel(booking.date,booking.time))return Response.json({error:"O cancelamento online encerra 4 horas antes do horário. Fale com a barbearia pelo WhatsApp."},{status:422});
+      const result=await callDatabase("update_booking",{...booking,status:"Cancelado"},true);
+      const notificationSent=await notifyCancellation(booking).catch(()=>false);
+      return Response.json({...result,notificationSent});
     }
     if(body.action==="createBlock"&&body.block)return Response.json(await callDatabase("create_block",body.block,true));
     if(body.action==="upsertService"&&body.service)return Response.json(await callDatabase("upsert_service",body.service,true));
