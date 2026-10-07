@@ -1,9 +1,13 @@
 export const dynamic = "force-dynamic";
 
+import {ADMIN_SESSION_COOKIE,verifyAdminSession} from "@/lib/admin-auth";
+
 type BookingInput={id?:string;name:string;phone:string;service:string;date:string;time:string;status?:string};
 type ApiBody={action:string;booking?:BookingInput;block?:{date:string;time:string;note?:string};service?:{number:string;name:string;price:number;duration:number};phone?:string;customerToken?:string;bookingId?:string};
 
 const normalizePhone=(value:string)=>value.replace(/\D/g,"");
+function sessionCookie(request:Request){return request.headers.get("cookie")?.split(";").map(value=>value.trim()).find(value=>value.startsWith(`${ADMIN_SESSION_COOKIE}=`))?.slice(ADMIN_SESSION_COOKIE.length+1)}
+async function requireAdmin(request:Request){return verifyAdminSession(sessionCookie(request))}
 async function customerToken(phone:string){
  const secret=process.env.BARBER_API_SECRET;if(!secret)throw new Error("Configuração de segurança indisponível.");
  const encoder=new TextEncoder();const key=await crypto.subtle.importKey("raw",encoder.encode(secret),{name:"HMAC",hash:"SHA-256"},false,["sign"]);const signature=await crypto.subtle.sign("HMAC",key,encoder.encode(`customer:${normalizePhone(phone)}`));return Array.from(new Uint8Array(signature),byte=>byte.toString(16).padStart(2,"0")).join("");
@@ -44,6 +48,7 @@ async function callDatabase(action:string,payload:Record<string,unknown>={},admi
 export async function GET(request:Request){
   try{
     const isPublic=new URL(request.url).searchParams.get("scope")==="public";
+    if(!isPublic&&!await requireAdmin(request))return Response.json({error:"Sessão administrativa necessária."},{status:401});
     const data=await callDatabase(isPublic?"get_public":"get_admin",{},!isPublic);
     return Response.json(data,{headers:{"Cache-Control":"no-store"}});
   }catch(error){console.error("barber_data_load_failed",error);return Response.json({error:"Não foi possível carregar a agenda."},{status:500})}
@@ -58,6 +63,7 @@ export async function POST(request:Request){
       catch(error){if(error instanceof Error&&error.message==="SLOT_TAKEN")return Response.json({error:"Este horário acabou de ser reservado."},{status:409});throw error}
     }
     if(body.action==="createAdminBooking"&&body.booking){
+      if(!await requireAdmin(request))return Response.json({error:"Sessão administrativa necessária."},{status:401});
       const b=body.booking;if(!b.name||!b.phone||!b.service||!b.date||!b.time)return Response.json({error:"Preencha todos os dados."},{status:400});
       try{return Response.json(await callDatabase("create_booking",b as unknown as Record<string,unknown>,true))}
       catch(error){if(error instanceof Error&&error.message==="SLOT_TAKEN")return Response.json({error:"Este horário já está ocupado."},{status:409});throw error}
@@ -80,14 +86,15 @@ export async function POST(request:Request){
       const notificationSent=await notifyCancellation(booking).catch(()=>false);
       return Response.json({...result,notificationSent});
     }
-    if(body.action==="createBlock"&&body.block)return Response.json(await callDatabase("create_block",body.block,true));
-    if(body.action==="upsertService"&&body.service)return Response.json(await callDatabase("upsert_service",body.service,true));
+    if(body.action==="createBlock"&&body.block){if(!await requireAdmin(request))return Response.json({error:"Sessão administrativa necessária."},{status:401});return Response.json(await callDatabase("create_block",body.block,true))}
+    if(body.action==="upsertService"&&body.service){if(!await requireAdmin(request))return Response.json({error:"Sessão administrativa necessária."},{status:401});return Response.json(await callDatabase("upsert_service",body.service,true))}
     return Response.json({error:"Ação inválida."},{status:400});
   }catch(error){console.error("barber_data_create_failed",error);return Response.json({error:"Não foi possível salvar os dados."},{status:500})}
 }
 
 export async function PATCH(request:Request){
   try{
+    if(!await requireAdmin(request))return Response.json({error:"Sessão administrativa necessária."},{status:401});
     const {booking}=await request.json() as {booking:BookingInput};
     if(!booking?.id)return Response.json({error:"Agendamento inválido."},{status:400});
     try{return Response.json(await callDatabase("update_booking",booking as unknown as Record<string,unknown>,true))}
@@ -97,6 +104,7 @@ export async function PATCH(request:Request){
 
 export async function DELETE(request:Request){
   try{
+    if(!await requireAdmin(request))return Response.json({error:"Sessão administrativa necessária."},{status:401});
     const {type,id}=await request.json() as {type:"block"|"service";id:string};
     if(type==="block")return Response.json(await callDatabase("delete_block",{id},true));
     if(type==="service")return Response.json(await callDatabase("delete_service",{id},true));
