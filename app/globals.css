@@ -405,13 +405,13 @@ body{background:radial-gradient(circle at 76% 0,rgba(202,148,49,.1),transparent 
 .hero-media{
  inset:0;
  background-image:
-  linear-gradient(90deg,#060503 0%,rgba(6,5,3,.98) 25%,rgba(6,5,3,.87) 44%,rgba(6,5,3,.28) 72%,rgba(6,5,3,.08) 100%),
-  linear-gradient(0deg,rgba(5,4,2,.72) 0%,transparent 38%),
+  linear-gradient(90deg,rgba(6,5,3,.96) 0%,rgba(6,5,3,.8) 35%,rgba(6,5,3,.42) 67%,rgba(6,5,3,.18) 100%),
+  linear-gradient(0deg,rgba(5,4,2,.72) 0%,transparent 43%),
   url('/ambiente-bs.png');
  background-repeat:no-repeat;
- background-size:100% 100%,100% 100%,min(49vw,720px) auto;
- background-position:center,center,right 42%;
- filter:saturate(.72) contrast(1.1) brightness(.76);
+ background-size:100% 100%,100% 100%,cover;
+ background-position:center,center,center 58%;
+ filter:saturate(.82) contrast(1.08) brightness(.72);
  animation:bsHeroCamera 15s cubic-bezier(.45,0,.2,1) infinite alternate;
 }
 .hero-copy{max-width:760px}
@@ -425,7 +425,7 @@ body{background:radial-gradient(circle at 76% 0,rgba(202,148,49,.1),transparent 
 .about-photo:after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,transparent 56%,rgba(5,4,2,.52)),linear-gradient(90deg,rgba(210,155,54,.06),transparent 46%);pointer-events:none}
 @keyframes bsHeroCamera{0%{transform:scale(1.015) translate3d(0,0,0)}100%{transform:scale(1.065) translate3d(-.7%,.35%,0)}}
 @media(max-width:1050px){
- .hero-media{background-size:100% 100%,100% 100%,min(58vw,660px) auto;background-position:center,center,right center}
+ .hero-media{background-size:100% 100%,100% 100%,cover;background-position:center,center,center 54%}
  .hero h1{font-size:clamp(54px,8.2vw,84px)}
 }
 @media(max-width:760px){
