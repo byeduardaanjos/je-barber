@@ -1,17 +1,15 @@
 export const dynamic = "force-dynamic";
 
-import {createHmac,timingSafeEqual} from "node:crypto";
-
 type BookingInput={id?:string;name:string;phone:string;service:string;date:string;time:string;status?:string};
 type ApiBody={action:string;booking?:BookingInput;block?:{date:string;time:string;note?:string};service?:{number:string;name:string;price:number;duration:number};phone?:string;customerToken?:string;bookingId?:string};
 
 const normalizePhone=(value:string)=>value.replace(/\D/g,"");
-function customerToken(phone:string){
+async function customerToken(phone:string){
  const secret=process.env.BARBER_API_SECRET;if(!secret)throw new Error("Configuração de segurança indisponível.");
- return createHmac("sha256",secret).update(`customer:${normalizePhone(phone)}`).digest("hex");
+ const encoder=new TextEncoder();const key=await crypto.subtle.importKey("raw",encoder.encode(secret),{name:"HMAC",hash:"SHA-256"},false,["sign"]);const signature=await crypto.subtle.sign("HMAC",key,encoder.encode(`customer:${normalizePhone(phone)}`));return Array.from(new Uint8Array(signature),byte=>byte.toString(16).padStart(2,"0")).join("");
 }
-function validCustomer(phone:string,token:string){
- if(!phone||!token)return false;const expected=customerToken(phone);const a=Buffer.from(expected);const b=Buffer.from(token);return a.length===b.length&&timingSafeEqual(a,b);
+async function validCustomer(phone:string,token:string){
+ if(!phone||!token)return false;const expected=await customerToken(phone);if(expected.length!==token.length)return false;let difference=0;for(let index=0;index<expected.length;index++)difference|=expected.charCodeAt(index)^token.charCodeAt(index);return difference===0;
 }
 function canCancel(date:string,time:string){return new Date(`${date}T${time}:00-03:00`).getTime()-Date.now()>=4*60*60*1000}
 async function notifyCancellation(booking:BookingInput){
@@ -56,7 +54,7 @@ export async function POST(request:Request){
     const body=await request.json() as ApiBody;
     if(body.action==="createBooking"&&body.booking){
       const b=body.booking;if(!b.name||!b.phone||!b.service||!b.date||!b.time)return Response.json({error:"Preencha todos os dados."},{status:400});
-      try{const data=await callDatabase("create_booking",b as unknown as Record<string,unknown>);return Response.json({...data,customerToken:customerToken(b.phone)})}
+      try{const data=await callDatabase("create_booking",b as unknown as Record<string,unknown>);return Response.json({...data,customerToken:await customerToken(b.phone)})}
       catch(error){if(error instanceof Error&&error.message==="SLOT_TAKEN")return Response.json({error:"Este horário acabou de ser reservado."},{status:409});throw error}
     }
     if(body.action==="createAdminBooking"&&body.booking){
@@ -65,13 +63,13 @@ export async function POST(request:Request){
       catch(error){if(error instanceof Error&&error.message==="SLOT_TAKEN")return Response.json({error:"Este horário já está ocupado."},{status:409});throw error}
     }
     if(body.action==="getCustomerBookings"&&body.phone&&body.customerToken){
-      if(!validCustomer(body.phone,body.customerToken))return Response.json({error:"Acesso não reconhecido neste aparelho."},{status:403});
+      if(!await validCustomer(body.phone,body.customerToken))return Response.json({error:"Acesso não reconhecido neste aparelho."},{status:403});
       const data=await callDatabase("get_admin",{},true) as {bookings?:BookingInput[]};
       const phone=normalizePhone(body.phone);const bookings=(data.bookings||[]).filter(item=>normalizePhone(item.phone)===phone).sort((a,b)=>`${b.date}${b.time}`.localeCompare(`${a.date}${a.time}`));
       return Response.json({bookings});
     }
     if(body.action==="cancelCustomerBooking"&&body.phone&&body.customerToken&&body.bookingId){
-      if(!validCustomer(body.phone,body.customerToken))return Response.json({error:"Acesso não reconhecido neste aparelho."},{status:403});
+      if(!await validCustomer(body.phone,body.customerToken))return Response.json({error:"Acesso não reconhecido neste aparelho."},{status:403});
       const data=await callDatabase("get_admin",{},true) as {bookings?:BookingInput[]};
       const booking=(data.bookings||[]).find(item=>item.id===body.bookingId&&normalizePhone(item.phone)===normalizePhone(body.phone));
       if(!booking)return Response.json({error:"Agendamento não encontrado."},{status:404});
